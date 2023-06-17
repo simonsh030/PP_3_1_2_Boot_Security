@@ -25,40 +25,40 @@ public class AdminController {
     }
 
     @GetMapping()
-    public String userList(Model model) {
-        model.addAttribute("allUsers", userService.listUsers());
+    public String getAllUsers(Model model) {
+        model.addAttribute("allUsers", userService.getAllUsers());
         return "admin";
     }
 
     @DeleteMapping("/delete/{id}")
-    public String deleteUser(@PathVariable("id") long id) {
-        userService.delete(id);
+    public String deleteUserById(@PathVariable("id") long id) {
+        userService.deleteUserById(id);
         return "redirect:/admin";
     }
 
     @GetMapping("/edit/{id}")
-    public String edit(Model model, @PathVariable("id") long id) {
+    public String showEditUserForm(Model model, @PathVariable("id") long id) {
         model.addAttribute("user", userService.findUserById(id));
         model.addAttribute("listRoles", roleService.getAllRoles());
         return "edit";
     }
 
     @PatchMapping("/{id}")
-    public String update(User user, @RequestParam("listRoles") ArrayList<Long> roles) {
-        userService.change(user, roleService.findRoles(roles));
+    public String updateUser(@ModelAttribute("user") User user, @RequestParam("listRoles") ArrayList<Long> roles) {
+        userService.updateUser(user, roleService.findRoles(roles));
         return "redirect:/admin";
     }
 
     @GetMapping("/new")
-    public String newUser(Model model) {
+    public String showNewUserForm(Model model) {
         model.addAttribute("user", new User());
         model.addAttribute("listRoles", roleService.getAllRoles());
         return "/new";
     }
 
     @PostMapping("/new")
-    public String addUser(User user, @RequestParam("listRoles") ArrayList<Long> roles) {
-        userService.add(user, roleService.findRoles(roles));
+    public String addUser(@ModelAttribute("user") User user, @RequestParam("listRoles") ArrayList<Long> roles) {
+        userService.addUser(user, roleService.findRoles(roles));
         return "redirect:/admin";
     }
 }

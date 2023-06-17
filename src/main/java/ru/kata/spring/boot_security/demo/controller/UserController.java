@@ -19,13 +19,13 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    public String pageForUser(Model model, Principal principal) {
+    public String showUserPage(Model model, Principal principal) {
         model.addAttribute("user", userService.loadUserByUsername(principal.getName()));
         return "user";
     }
 
     @GetMapping("user/{id}")
-    public String show(@PathVariable("id") long id, Model model) {
+    public String showUserById(@PathVariable("id") long id, Model model) {
         model.addAttribute("user", userService.findUserById(id));
         return "user";
     }

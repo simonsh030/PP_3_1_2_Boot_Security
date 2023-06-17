@@ -28,40 +28,43 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Transactional
     @Override
-    public void add(User user, Set<Role> roles) {
+    public void addUser(User user, Set<Role> roles) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-
-        userDao.add(user, roles);
+        userDao.addUser(user, roles);
     }
 
     @Transactional
     @Override
-    public void delete(long id) {
-        userDao.delete(id);
+    public void deleteUserById(long id) {
+        userDao.deleteUserById(id);
     }
 
     @Transactional
     @Override
-    public User change(User user, Set < Role > roles) {
+    public User updateUser(User user, Set<Role> roles) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userDao.change(user, roles);
+        return userDao.updateUser(user, roles);
     }
 
+    @Transactional(readOnly = true)
     @Override
-    public List < User > listUsers() {
-        return userDao.listUsers();
+    public List<User> getAllUsers() {
+        return userDao.getAllUsers();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public User findUserById(long id) {
         return userDao.findUserById(id);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public User findUserByName(String name) {
         return userDao.findUserByName(name);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userDao.findUserByName(username);
