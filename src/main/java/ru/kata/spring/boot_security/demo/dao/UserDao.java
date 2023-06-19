@@ -17,5 +17,5 @@ public interface UserDao {
 
     User findUserById(long id);
 
-    User findUserByName(String name);
+    User findUserByEmail(String name);
 }
