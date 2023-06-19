@@ -30,4 +30,10 @@ public class RoleServiceImpl implements RoleService {
     public List<Role> getAllRoles() {
         return roleDao.getAllRoles();
     }
+
+    @Transactional
+    @Override
+    public void addDefaultRoles() {
+        roleDao.addDefaultRoles();
+    }
 }
