@@ -18,4 +18,6 @@ public interface UserDao {
     User findUserById(long id);
 
     User findUserByEmail(String name);
+
+    User loadUserByUsername(String name);
 }

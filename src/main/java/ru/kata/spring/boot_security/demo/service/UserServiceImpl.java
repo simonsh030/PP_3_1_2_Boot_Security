@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, UserDetailsService{
 
     private final UserDao userDao;
     private final PasswordEncoder passwordEncoder;
@@ -64,4 +64,8 @@ public class UserServiceImpl implements UserService {
         return userDao.findUserByEmail(name);
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return userDao.loadUserByUsername(email);
+    }
 }
