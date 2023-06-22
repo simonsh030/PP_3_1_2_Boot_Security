@@ -18,5 +18,6 @@ public interface UserService {
 
     User findUserById(long id);
 
-    User findUserByEmail(String name);
+    User findUserByName(String name);
+    boolean isUserNameUnique(String name);
 }

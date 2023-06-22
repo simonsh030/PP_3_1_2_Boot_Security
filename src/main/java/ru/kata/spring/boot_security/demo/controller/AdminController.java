@@ -44,21 +44,33 @@ public class AdminController {
     }
 
     @PatchMapping("/{id}")
-    public String updateUser(@ModelAttribute("user") User user, @RequestParam("listRoles") ArrayList<Long> roles) {
-        userService.updateUser(user, roleService.findRoles(roles));
+    public String updateUser(@ModelAttribute("user") User user, @RequestParam("listRoles") ArrayList<Long> roles, Model model) {
+        if (userService.isUserNameUnique(user.getName())) {
+            userService.updateUser(user, roleService.findRoles(roles));
+        } else {
+            model.addAttribute("error", "Username already exists. Please choose a different username.");
+            return "edit";
+        }
+
         return "redirect:/admin";
     }
+
 
     @GetMapping("/new")
     public String showNewUserForm(Model model) {
         model.addAttribute("user", new User());
         model.addAttribute("listRoles", roleService.getAllRoles());
-        return "/new";
+        return "new";
     }
 
     @PostMapping("/new")
-    public String addUser(@ModelAttribute("user") User user, @RequestParam("listRoles") ArrayList<Long> roles) {
-        userService.addUser(user, roleService.findRoles(roles));
+    public String addUser(@ModelAttribute("user") User user, @RequestParam("listRoles") ArrayList<Long> roles, Model model) {
+        if (userService.isUserNameUnique(user.getName())) {
+            userService.addUser(user, roleService.findRoles(roles));
+        } else {
+            model.addAttribute("error", "Username already exists. Please choose a different username.");
+            return "new";
+        }
         return "redirect:/admin";
     }
 }
